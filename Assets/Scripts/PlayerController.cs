@@ -32,15 +32,44 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
 
-        transform.Rotate(Vector3.up * turnSpeed * horizontalInput * Time.deltaTime);
-        transform.Translate(Vector3.right * speed * horizontalInput * Time.deltaTime);
-       
+        if (horizontalInput > 0 && transform.position.z < 18)
+        {
+            transform.rotation = Quaternion.Euler(0, -75, 0);
+            transform.Translate(Vector3.forward  * speed * Time.deltaTime, Space.World);
+        }
+        else if (horizontalInput < 0 && transform.position.z > 2)
+        {
+            transform.rotation = Quaternion.Euler(0, -115, 0);
+            transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0,-90,0);
+        }
 
-        //if (! (transform.position.x < leftBound &&  transform.position.x > rightBound && !gameOver) )
-        //{
-            
-        //}
-        
+        //transform.Translate(Vector3.left * speed * horizontalInput * Time.deltaTime);
+
+            //if (Input.GetKey(KeyCode.LeftArrow))
+            //{
+            //    transform.rotation = Quaternion.Euler(0, -115, 0);
+            //    transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            //}
+
+
+            //if (Input.GetKey(KeyCode.RightArrow))
+            //{
+            //    transform.rotation = Quaternion.Euler(0, -75, 0);
+            //    transform.Translate(Vector3.back * speed * Time.deltaTime);
+            //}
+
+
+
+
+            //if (! (transform.position.x < leftBound &&  transform.position.x > rightBound && !gameOver) )
+            //{
+
+            //}
+
     }
 
     private void OnCollisionEnter(Collision collision)

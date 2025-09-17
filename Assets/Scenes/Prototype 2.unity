@@ -1286,7 +1286,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 732538974}
-  - component: {fileID: 732538973}
   m_Layer: 0
   m_Name: animalSpawner
   m_TagString: Untagged
@@ -1294,22 +1293,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &732538973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 732538972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5433b03efd0a1c947a1b2a4abf2eabce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animalPrefab: {fileID: 998944462}
-  tempsApparition: 2
-  delaiInitial: 1
-  spawnPos: {x: 13, y: 0, z: -10}
 --- !u!4 &732538974
 Transform:
   m_ObjectHideFlags: 0
@@ -1318,12 +1301,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732538972}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.34, y: 0, z: -0.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 992285706}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &754241687
 GameObject:
@@ -1676,6 +1659,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 732538974}
   - {fileID: 475985834}
   - {fileID: 1590138455}
   - {fileID: 425805627}
@@ -1694,7 +1678,6 @@ GameObject:
   - component: {fileID: 998944465}
   - component: {fileID: 998944466}
   - component: {fileID: 998944469}
-  - component: {fileID: 998944470}
   m_Layer: 0
   m_Name: Animal_Cow_White
   m_TagString: Animal
@@ -1741,7 +1724,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b33b9748aaf23c4090e0dcb8ef7c68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  rb: {fileID: 998944465}
+  moveSpeed: 5
+  progress: 0
 --- !u!95 &998944467
 Animator:
   serializedVersion: 7
@@ -1772,8 +1757,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 998944462}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2, y: 0, z: 2}
   m_LocalScale: {x: 0.09, y: 0.09, z: 0.09}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1801,19 +1786,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 16, y: 25, z: 55}
   m_Center: {x: 0, y: 13, z: 0}
---- !u!114 &998944470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998944462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d3929ea3e56f3549a85098763243f97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
 --- !u!1 &1037654282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2595,7 +2567,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 418557392780296554, guid: 14c38613077009849bdd0f0c08598aee, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 418557392780296554, guid: 14c38613077009849bdd0f0c08598aee, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2603,7 +2575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 418557392780296554, guid: 14c38613077009849bdd0f0c08598aee, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 418557392780296554, guid: 14c38613077009849bdd0f0c08598aee, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2633,6 +2605,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 615196888385423829, guid: 14c38613077009849bdd0f0c08598aee, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1831899558665591119, guid: 14c38613077009849bdd0f0c08598aee, type: 3}
       propertyPath: m_Name
       value: Animal_Cow_White
@@ -2644,7 +2620,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1831899558665591119, guid: 14c38613077009849bdd0f0c08598aee, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 998944470}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 14c38613077009849bdd0f0c08598aee, type: 3}
 --- !u!1001 &1715849599
 PrefabInstance:
@@ -2982,4 +2958,3 @@ SceneRoots:
   - {fileID: 992285706}
   - {fileID: 1715849599}
   - {fileID: 1673495758}
-  - {fileID: 732538974}
