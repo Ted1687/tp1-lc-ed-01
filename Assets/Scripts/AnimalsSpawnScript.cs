@@ -4,19 +4,26 @@ public class AnimalsSpawnScript : MonoBehaviour
 {
 
     public GameObject animalPrefab;
+    PlayerController playerControllerSript;
+
     public float tempsApparition = 2f;
     public float delaiInitial = 1f;
-    public float posBase = 2.34f;
     
+
+    public Vector3 spawnPos = new Vector3(13, 0, -10);
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        InvokeRepeating("apparaitreAnimaux", delaiInitial, tempsApparition);
+        playerControllerSript = GameObject.Find("Player").GetComponent<PlayerController>();
+        //InvokeRepeating("apparaitreAnimaux", delaiInitial, tempsApparition);
     }
 
     void apparaitreAnimaux()
     {
-        Instantiate(animalPrefab, new Vector3(posBase, 0, -0.39f), animalPrefab.transform.rotation);
+        if (!playerControllerSript.gameOver)
+        Instantiate(animalPrefab, spawnPos, animalPrefab.transform.rotation);
         
     }
 
