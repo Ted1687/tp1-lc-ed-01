@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
 
     private float rightBound = 16;
 
-    public bool gameOver;
+
+    private GameOverTrigger trigger;
 
     private Animator playerAnim;
 
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        trigger = GetComponent<GameOverTrigger>();
+
         playerAnim = GetComponent<Animator>();
         
     }
@@ -32,56 +35,36 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
 
-        if (horizontalInput > 0 && transform.position.z < 18)
+        float limiteDroite = 9f;
+        float limiteGauche = -9f;
+
+        if (!trigger.gameOver)
         {
-            transform.rotation = Quaternion.Euler(0, -75, 0);
-            transform.Translate(Vector3.forward  * speed * Time.deltaTime, Space.World);
-        }
-        else if (horizontalInput < 0 && transform.position.z > 2)
-        {
-            transform.rotation = Quaternion.Euler(0, -115, 0);
-            transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0,-90,0);
-        }
+            if (horizontalInput > 0 && transform.position.x > limiteGauche && !trigger.gameOver)
+            {
+                transform.rotation = Quaternion.Euler(0, 195, 0);
+                transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
+            }
+            else if (horizontalInput < 0 && transform.position.x < limiteDroite && !trigger.gameOver)
+            {
+                transform.rotation = Quaternion.Euler(0, 165, 0);
+                transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
 
-        //transform.Translate(Vector3.left * speed * horizontalInput * Time.deltaTime);
-
-            //if (Input.GetKey(KeyCode.LeftArrow))
-            //{
-            //    transform.rotation = Quaternion.Euler(0, -115, 0);
-            //    transform.Translate(Vector3.forward * speed * Time.deltaTime);
-            //}
-
-
-            //if (Input.GetKey(KeyCode.RightArrow))
-            //{
-            //    transform.rotation = Quaternion.Euler(0, -75, 0);
-            //    transform.Translate(Vector3.back * speed * Time.deltaTime);
-            //}
-
-
-
-
-            //if (! (transform.position.x < leftBound &&  transform.position.x > rightBound && !gameOver) )
-            //{
-
-            //}
-
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Animal"))
-        {
-            gameOver = true;
-
-            //animation de mort
+        }else if (trigger.gameOver){
+            //animation de mort quand game over
             playerAnim.SetBool("Death_b", true);
-            playerAnim.SetInteger("DeathType_int", 1);
-
+            playerAnim.SetInteger("DeathType_int", 2);
+            //Idle quand game over
+            playerAnim.SetFloat("Speed_f", 0.20f);
         }
+       
+
+        
     }
+  
 }
