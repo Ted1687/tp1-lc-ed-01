@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
 
     private Animator playerAnim;
 
+    public GameObject foodPrefab;
+
+   
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,6 +42,8 @@ public class PlayerController : MonoBehaviour
         float limiteDroite = 9f;
         float limiteGauche = -9f;
 
+       
+
         if (!trigger.gameOver)
         {
             if (horizontalInput > 0 && transform.position.x > limiteGauche && !trigger.gameOver)
@@ -55,7 +61,16 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, 180, 0);
             }
 
-        }else if (trigger.gameOver){
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                GameObject food = Instantiate(foodPrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.Euler(0,180,0));
+                FoodController foodController = food.GetComponent<FoodController>();
+
+                Physics.IgnoreCollision(food.GetComponent<BoxCollider>(), GetComponent<BoxCollider>());
+            }
+
+        }
+        else if (trigger.gameOver){
             //animation de mort quand game over
             playerAnim.SetBool("Death_b", true);
             playerAnim.SetInteger("DeathType_int", 2);

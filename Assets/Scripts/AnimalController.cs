@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class cowMovement : MonoBehaviour
+public class AnimalController : MonoBehaviour
 {
     private Rigidbody rb;
 
@@ -28,7 +28,7 @@ public class cowMovement : MonoBehaviour
         trigger = GameObject.Find("Player").GetComponent<GameOverTrigger>();
     }
 
-    void Manger()
+    public void Manger()
     {
         hungry = false;
     }

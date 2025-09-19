@@ -671,7 +671,7 @@ MonoBehaviour:
   animalsPrefab:
   - {fileID: 1831899558665591119, guid: b440df885dea171488ee900496a8eb94, type: 3}
   - {fileID: 8457644800187697923, guid: 18be96d3b7ce93e4c8a3b82ac7760737, type: 3}
-  initialDelay: 10
+  initialDelay: 5
   nextDelay: 0
   progress: 0
   progressDifficulty: 0
@@ -753,6 +753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   turnSpeed: 5
+  foodPrefab: {fileID: 6747850002373534560, guid: 20251445113575249bd380a3f68fc163, type: 3}
 --- !u!65 &1098835728
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -918,11 +919,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: 814f4326a50812947b2469896d89a215, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: 814f4326a50812947b2469896d89a215, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: 814f4326a50812947b2469896d89a215, type: 3}
       propertyPath: m_LocalPosition.z
