@@ -4,14 +4,11 @@ public class FoodController : MonoBehaviour
 {
   
     public float vitesseDeLancement = 5f;
-    public BoxCollider collider;
-   private AnimalController animalController;
-
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        collider = GetComponent<BoxCollider>();
-        animalController = GameObject.FindWithTag("Animal").GetComponent<AnimalController>();
+          //rb = GetComponent<Rigidbody>();
     }
     // Update is called once per frame
     void Update()
@@ -20,31 +17,25 @@ public class FoodController : MonoBehaviour
 
         // on recupere la vue pour detruire la pizza
         Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
-        if (viewportPosition.x < 0 || viewportPosition.x > 1 || viewportPosition.y < 0 || viewportPosition.y > 1)
-            {
+        if (viewportPosition.x < 0 || viewportPosition.x > 1 || viewportPosition.y < 0 || viewportPosition.y > 1){
             Destroy(gameObject);
         }
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Animal")) {
-
-            //Physics.IgnoreCollision(gameObject.GetComponent<BoxCollider>(), animalController.GetComponent<BoxCollider>());
+        if (other.CompareTag("Animal"))
+        {
 
             Debug.Log("en collision");
             Destroy(gameObject);
+
+            GameObject animal = other.gameObject;
+            //animal.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            AnimalController animalController = animal.GetComponent<AnimalController>();
             animalController.Manger();
 
-            
-
-            
         }
-
     }
-
-
-    
-
 }

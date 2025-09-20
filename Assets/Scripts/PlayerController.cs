@@ -10,9 +10,9 @@ public class PlayerController : MonoBehaviour
 
     private float verticalInput;
 
-    private float leftBound  = 4;
+    private float leftBound  = 9f;
 
-    private float rightBound = 16;
+    private float rightBound = -9f;
 
 
     private GameOverTrigger trigger;
@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     public GameObject foodPrefab;
 
    
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -63,10 +62,8 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                GameObject food = Instantiate(foodPrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.Euler(0,180,0));
-                FoodController foodController = food.GetComponent<FoodController>();
-
-                Physics.IgnoreCollision(food.GetComponent<BoxCollider>(), GetComponent<BoxCollider>());
+                GameObject food = Instantiate(foodPrefab, new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z), Quaternion.Euler(0,180,0));
+                         
             }
 
         }

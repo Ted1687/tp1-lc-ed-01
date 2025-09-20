@@ -5,20 +5,20 @@ public class AnimalController : MonoBehaviour
     private Rigidbody rb;
 
     public float speed = 3f;
+    public float speedFuite = 8f;
 
-    public bool movingRight = true;
-
-    private float angleTour = 180;
+    public bool movingLeft = true;
 
     private Animator animalAnim;
-
-    private PlayerController playerControllerScript;
 
     private GameOverTrigger trigger;
 
     private bool hungry = true;
 
-  
+    private float animationEatDuration = 2f;
+
+    public float duration = 0f;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,7 +38,7 @@ public class AnimalController : MonoBehaviour
     {
         if (hungry && !trigger.gameOver)
         {
-            if (movingRight)
+            if (movingLeft)
             {
                 transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
 
@@ -48,36 +48,46 @@ public class AnimalController : MonoBehaviour
                 transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
             }
 
-            float limiteDroite = 9f;
-            float limiteGauche = -9f;
+            float limiteGauche = 9f;
+            float limiteDroite = -9f;
 
-            if (transform.position.x >= limiteDroite && movingRight)
+            if (transform.position.x >= limiteGauche && movingLeft)
             {
-                movingRight = false;
+                movingLeft = false;
                 transform.rotation = Quaternion.Euler(0, -90f, 0);  // tourne vers la gauche
             }
-            else if (transform.position.x <= limiteGauche && !movingRight)
+            else if (transform.position.x <= limiteDroite && !movingLeft)
             {
-                movingRight = true;
+                movingLeft = true;
                 transform.rotation = Quaternion.Euler(0, 90f, 0);   // tourne vers la droite
             }
 
         }
         else if (!hungry && !trigger.gameOver){
 
-            if (transform.rotation.y == 90f)
+            duration += Time.deltaTime;
+
+            if (duration < animationEatDuration)
             {
-                transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
+                animalAnim.SetBool("Eat_b", true);
+                
             }
-            else
+            else if(duration > animationEatDuration) 
             {
-                transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
+                animalAnim.SetBool("Eat_b", false);
+                animalAnim.SetFloat("Speed_f", 1.5f);
+
+                // Logique de fuite//
+                if (transform.rotation.y > 0)
+                {
+                    transform.Translate(Vector3.right * speedFuite * Time.deltaTime, Space.World);
+                }
+                else 
+                {
+                    transform.Translate(Vector3.left * speedFuite * Time.deltaTime, Space.World);
+                }
             }
 
-            animalAnim.SetBool("Eat_b", true);
-            animalAnim.SetFloat("Speed_f", 0.01f);
-
-            //Il doit courri pour s'en aller !
         }
 
     }
