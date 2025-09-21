@@ -3,18 +3,17 @@ using UnityEngine;
 public class AnimalsSpawnScript : MonoBehaviour
 {
 
-    public GameObject[] animalsPrefab;
-    PlayerController playerControllerSript;
-    GameOverTrigger trigger;
+    public GameObject[] animalsPrefab; //Les animaux à faire spawn
+  
+    GameOverTrigger trigger;//trigger qui enclenche le gameOver
 
-    
-    public float initialDelay = 30f;
-    public float nextDelay;
-    public float progress;
-    public float progressDifficulty;
+    public float initialDelay = 10f; //Delai de base. Delai avant la première apparition d'un animal
 
-    
+    public float nextDelay; //Délai avant la prochaine apparition
 
+    private float progress; //Progression du temps, rénitialisé après chaque apparition.
+
+    private float progressDifficulty;//Progression du temps, rénitialisé après 15s. Sert à augmenter la difficulté
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,11 +24,13 @@ public class AnimalsSpawnScript : MonoBehaviour
 
     void SpawnAnimal()
     {
+        //Les animaux n'apparaissent que pendant le jeu
         if (!trigger.gameOver)
         {
-            GameObject a = animalsPrefab[Random.Range(0, animalsPrefab.Length)];
-            Vector3 spawnPos = new Vector3(Random.Range(-6f, 6f), 0, 5);
-            //Rotation Aléatoire
+            GameObject a = animalsPrefab[Random.Range(0, animalsPrefab.Length)];//2 types d'animaux peuvent apparaitrent
+            Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 0, 5);//Ils apparaissent horizontalement à une position aléatoire
+
+            //Rotation Aléatoire À voir
             Instantiate(a, spawnPos, a.transform.rotation);
         }
        
@@ -39,8 +40,7 @@ public class AnimalsSpawnScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
+        //Le temps progresse, après chaque 15 secondes le délai de base baisse ce qui augmente le taux d'apparition (Difficulté)
         progressDifficulty += Time.deltaTime;
 
         if ( progressDifficulty > 15f )
@@ -50,6 +50,7 @@ public class AnimalsSpawnScript : MonoBehaviour
             Debug.Log("Delai initial : " + initialDelay);
         }
 
+        //Le temps progresse, au délai l'animal apparaît. Le prochain délai est calculé entre +/- 50% du délai de base
         progress += Time.deltaTime;
 
         if (progress > nextDelay)

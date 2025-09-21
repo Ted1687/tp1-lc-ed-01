@@ -2,22 +2,31 @@ using UnityEngine;
 
 public class AnimalController : MonoBehaviour
 {
-    private Rigidbody rb;
+    
 
-    public float speed = 3f;
+    public float speed = 10f;
+
     public float speedFuite = 8f;
 
-    public bool movingLeft = true;
+    //Limite de déplacement
+    private float limiteGauche = 9f;
+    private float limiteDroite = -9f;
 
-    private Animator animalAnim;
+    private bool movingLeft = true; //L'animal va à gauche
 
-    private GameOverTrigger trigger;
+    private Animator animalAnim; //Composant animator
 
-    private bool hungry = true;
+    private Rigidbody animalRB; // Composant rigidBody
 
-    private float animationEatDuration = 2f;
+    private GameOverTrigger trigger; //Trigger qui enclenche le game over
 
-    public float duration = 0f;
+    private GameObject player; //Le player
+
+    private bool hungry = true; //Détermine si l'animal est nourrit
+
+    private float animationEatDuration = 2f; //Durée de l'animation Eat
+
+    private float progress = 0f; //Progrès du temps
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,32 +34,49 @@ public class AnimalController : MonoBehaviour
     {
         animalAnim = GetComponent<Animator>();
 
+        animalRB = GetComponent<Rigidbody>();
+
         trigger = GameObject.Find("Player").GetComponent<GameOverTrigger>();
+
+        player = GameObject.Find("Player");
+
+
     }
 
     public void Manger()
     {
-        hungry = false;
+        hungry = false;//L'aniaml est nourrit. Il n'a plus faim.
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        //Game over si l'animal affamé dépasse le joueur
+        if (transform.position.z > player.transform.position.z + 2 && hungry)
+        {
+            trigger.gameOver = true;
+            trigger.jouerSoundGameOver();//Son de game over
+            
+        }
+
+        //L'animmal est affamé et en jeu
         if (hungry && !trigger.gameOver)
         {
+
             if (movingLeft)
             {
+                //L'animal va à gauche
                 transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
-
+                
             }
             else
             {
+                //L'animal va à droite
                 transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
             }
 
-            float limiteGauche = 9f;
-            float limiteDroite = -9f;
-
+            //Il fait demi tour au différente limite
             if (transform.position.x >= limiteGauche && movingLeft)
             {
                 movingLeft = false;
@@ -62,31 +88,45 @@ public class AnimalController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, 90f, 0);   // tourne vers la droite
             }
 
-        }
-        else if (!hungry && !trigger.gameOver){
+        }//L'animal est nourrit et en jeu
+        else if (!hungry && !trigger.gameOver)
+        {
 
-            duration += Time.deltaTime;
+            progress += Time.deltaTime;
 
-            if (duration < animationEatDuration)
+            if (progress < animationEatDuration)
             {
-                animalAnim.SetBool("Eat_b", true);
-                
+                animalAnim.SetBool("Eat_b", true);//L'animation eat est déclenché
+
             }
-            else if(duration > animationEatDuration) 
+            else if (progress > animationEatDuration)
             {
+                //Après un certain temps l'animation passe de eat à running
                 animalAnim.SetBool("Eat_b", false);
                 animalAnim.SetFloat("Speed_f", 1.5f);
 
-                // Logique de fuite//
+                //L'animal sort du côté gauche ou droite en fonction de sa direction de rotation
                 if (transform.rotation.y > 0)
                 {
                     transform.Translate(Vector3.right * speedFuite * Time.deltaTime, Space.World);
                 }
-                else 
+                else
                 {
                     transform.Translate(Vector3.left * speedFuite * Time.deltaTime, Space.World);
                 }
             }
+
+        }//C'est le game over
+        else if(trigger.gameOver)
+        {
+
+            //Animation de game Over
+            //Physics.gravity = new Vector3(0, -9.81f * 10f, 0);
+            //bool auSol = true;
+            //if (auSol)
+            //{
+            //    animalRB.AddForce(Vector3.up * 1f, ForceMode.Impulse);
+            //}
 
         }
 

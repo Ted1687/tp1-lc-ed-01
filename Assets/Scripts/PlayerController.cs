@@ -2,26 +2,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed = 10f; //Vitesse de déplacement du joueur
     
-    public float turnSpeed = 10f;
-
     private float horizontalInput;
 
-    private float verticalInput;
-
+    //Les limites de déplacements à l'écran
     private float leftBound  = 9f;
 
     private float rightBound = -9f;
 
 
-    private GameOverTrigger trigger;
+    private GameOverTrigger trigger; //Trigger qui active le gameOver
 
-    private Animator playerAnim;
+    private Animator playerAnim; //Composant animator
 
-    public GameObject foodPrefab;
+    public GameObject foodPrefab; //La nourriture lancée
 
-   
+    public ParticleSystem fx_foodThrow;// particule qui s'active quand on lance la nourriture
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,47 +34,51 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
-
-        float limiteDroite = 9f;
-        float limiteGauche = -9f;
-
-       
 
         if (!trigger.gameOver)
         {
-            if (horizontalInput > 0 && transform.position.x > limiteGauche && !trigger.gameOver)
+            //Pendant le jeu, input gauche et droite
+            if (horizontalInput > 0 && transform.position.x > rightBound && !trigger.gameOver)
             {
+                //Le joueur va à droite avec un léger changement d'angle pour animer le mouvement
+                //Il ne dépasse la limite à droite
                 transform.rotation = Quaternion.Euler(0, 195, 0);
                 transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
             }
-            else if (horizontalInput < 0 && transform.position.x < limiteDroite && !trigger.gameOver)
+            else if (horizontalInput < 0 && transform.position.x < leftBound && !trigger.gameOver)
             {
+                //Le joueur va à gauche avec un léger changement d'angle pour animer le mouvement
+                //Il ne dépasse la limite à gauche
                 transform.rotation = Quaternion.Euler(0, 165, 0);
                 transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
             }
             else
             {
+                //Le joueur court tout droit
                 transform.rotation = Quaternion.Euler(0, 180, 0);
             }
 
+            //Pendant le jeu, input espace
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                //Instancie un objet de jeu (Préfabriqué) de nourriture
                 GameObject food = Instantiate(foodPrefab, new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z), Quaternion.Euler(0,180,0));
-                         
+
+                //E»ffet de particule qui accompagne le lancer
+                fx_foodThrow.Play();
             }
 
-        }
-        else if (trigger.gameOver){
-            //animation de mort quand game over
+        }//Lors d'un gameOver
+        else if (trigger.gameOver)
+        {
+            //animation de mort du joueur quand game over
             playerAnim.SetBool("Death_b", true);
             playerAnim.SetInteger("DeathType_int", 2);
-            //Idle quand game over
+
+            //Il devient static quand game over. Il ne court plus, l'animation change
             playerAnim.SetFloat("Speed_f", 0.20f);
         }
-       
-
         
     }
   
