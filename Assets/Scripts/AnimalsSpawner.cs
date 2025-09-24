@@ -15,6 +15,10 @@ public class AnimalsSpawnScript : MonoBehaviour
 
     private float progressDifficulty;//Progression du temps, rénitialisé après 15s. Sert à augmenter la difficulté
 
+    //Limite de spawn
+    private float limiteGauche = 8f;
+    private float limiteDroite = -8f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,7 +32,7 @@ public class AnimalsSpawnScript : MonoBehaviour
         if (!trigger.gameOver)
         {
             GameObject a = animalsPrefab[Random.Range(0, animalsPrefab.Length)];//2 types d'animaux peuvent apparaitrent
-            Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 0, 10);//Ils apparaissent horizontalement à une position aléatoire
+            Vector3 spawnPos = new Vector3(Random.Range(limiteDroite, limiteGauche), 0, 8);//Ils apparaissent horizontalement à une position aléatoire
 
             //Rotation Aléatoire À voir
             Instantiate(a, spawnPos, a.transform.rotation);
@@ -40,7 +44,7 @@ public class AnimalsSpawnScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Le temps progresse, après chaque 15 secondes le délai de base baisse ce qui augmente le taux d'apparition (Difficulté)
+        //Le temps progresse, après chaque 15 secondes le délai de base baisse de 5% ce qui augmente le taux d'apparition (Difficulté)
         progressDifficulty += Time.deltaTime;
 
         if ( progressDifficulty > 15f )

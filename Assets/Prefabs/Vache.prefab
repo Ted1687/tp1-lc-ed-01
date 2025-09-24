@@ -478,7 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
   audioClip: {fileID: 8300000, guid: bc770658a1b5b9abe8e54b0757cbe36a, type: 3}
-  speed: 3
+  speed: 4
   speedFuite: 8
 --- !u!114 &1941499805557425554
 MonoBehaviour:
@@ -492,7 +492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3929ea3e56f3549a85098763243f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 4
 --- !u!54 &4926196804737337811
 Rigidbody:
   m_ObjectHideFlags: 0

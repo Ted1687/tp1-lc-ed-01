@@ -6,13 +6,18 @@ public class AnimalController : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip audioClip;
     
-    public float speed = 3f;
+    public float speed = 4f;
 
     public float speedFuite = 8f;
 
     //Limite de d�placement
     private float limiteGauche = 9f;
     private float limiteDroite = -9f;
+
+    //Mouvement de rotation
+    private float rotationGauche = -90f;
+    private float rotationDroite = 90f;
+    
 
     private bool movingLeft = true; //L'animal va à gauche
 
@@ -24,9 +29,9 @@ public class AnimalController : MonoBehaviour
 
     private bool hungry = true; //D�termine si l'animal est nourrit
 
-    private float animationEatDuration = 2f; //Dur�e de l'animation Eat
+    private float animationEatDuration = 2f; //Duree de l'animation Eat
 
-    private float progress = 0f; //Progr�s du temps
+    private float progress = 0f; //Progres du temps
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,7 +45,6 @@ public class AnimalController : MonoBehaviour
         
         audioSource = GetComponent<AudioSource>();
 
-        Physics.gravity = new Vector3(0, -9.81f * 10f, 0);
     }
 
     public void Manger()
@@ -83,12 +87,12 @@ public class AnimalController : MonoBehaviour
             if (transform.position.x >= limiteGauche && movingLeft)
             {
                 movingLeft = false;
-                transform.rotation = Quaternion.Euler(0, -90f, 0);  // tourne vers la gauche
+                transform.rotation = Quaternion.Euler(0, rotationGauche, 0);  // tourne vers la gauche
             }
             else if (transform.position.x <= limiteDroite && !movingLeft)
             {
                 movingLeft = true;
-                transform.rotation = Quaternion.Euler(0, 90f, 0);   // tourne vers la droite
+                transform.rotation = Quaternion.Euler(0, rotationDroite, 0);   // tourne vers la droite
             }
 
         }//L'animal est nourrit et en jeu
@@ -123,7 +127,7 @@ public class AnimalController : MonoBehaviour
         else if(trigger.gameOver)
         {
             
-            // Rotation infinie
+            // Rotation infinie//Animation de fin de l'animal
             transform.Rotate(Vector3.up * 60f * Time.deltaTime, Space.World);
          
 

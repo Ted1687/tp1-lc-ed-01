@@ -8,8 +8,12 @@ public class PlayerController : MonoBehaviour
 
     //Les limites de déplacements à l'écran
     private float leftBound  = 9f;
-
     private float rightBound = -9f;
+
+    //Mouvement de rotation
+    private float versGauche= 165f;
+    private float versDroite= 195f;
+    private float toutDroit= 180f;
 
 
     private static GameOverTrigger trigger; //Trigger qui active le gameOver
@@ -43,20 +47,20 @@ public class PlayerController : MonoBehaviour
             {
                 //Le joueur va à droite avec un léger changement d'angle pour animer le mouvement
                 //Il ne dépasse la limite à droite
-                transform.rotation = Quaternion.Euler(0, 195, 0);
+                transform.rotation = Quaternion.Euler(0, versDroite, 0);
                 transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
             }
             else if (horizontalInput < 0 && transform.position.x < leftBound && !trigger.gameOver)
             {
                 //Le joueur va à gauche avec un léger changement d'angle pour animer le mouvement
                 //Il ne dépasse la limite à gauche
-                transform.rotation = Quaternion.Euler(0, 165, 0);
+                transform.rotation = Quaternion.Euler(0, versGauche, 0);
                 transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
             }
             else
             {
                 //Le joueur court tout droit
-                transform.rotation = Quaternion.Euler(0, 180, 0);
+                transform.rotation = Quaternion.Euler(0, toutDroit, 0);
             }
 
             //Pendant le jeu, input espace
