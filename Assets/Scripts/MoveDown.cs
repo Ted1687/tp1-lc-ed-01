@@ -3,7 +3,7 @@ using UnityEngine;
 public class MoveDown : MonoBehaviour
 {
 
-    public float speed = 2f;// Vitesse de mouvement vers le bas 
+    public float speed = 3f;// Vitesse de mouvement vers le bas 
 
     private float Bound = 40f;//Limite sur l'axe z avant que les objets animaux soit détruits
 
