@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10f; //Vitesse de déplacement du joueur
+    public float speed = 8f; //Vitesse de déplacement du joueur
     
     private float horizontalInput;
 
@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private float rightBound = -9f;
 
 
-    private GameOverTrigger trigger; //Trigger qui active le gameOver
+    private static GameOverTrigger trigger; //Trigger qui active le gameOver
 
     private Animator playerAnim; //Composant animator
 

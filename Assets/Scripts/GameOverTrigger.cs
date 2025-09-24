@@ -39,7 +39,10 @@ public class GameOverTrigger : MonoBehaviour
         if (cameraAudioSource != null && gameOverClip != null && gameOver)
         {
             cameraAudioSource.clip = gameOverClip;
-            cameraAudioSource.Play();
+            if (!cameraAudioSource.isPlaying)
+            {
+                cameraAudioSource.Play();
+            }
         }
     }
 }

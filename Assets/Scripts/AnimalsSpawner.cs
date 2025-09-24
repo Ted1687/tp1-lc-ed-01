@@ -5,9 +5,9 @@ public class AnimalsSpawnScript : MonoBehaviour
 
     public GameObject[] animalsPrefab; //Les animaux à faire spawn
   
-    GameOverTrigger trigger;//trigger qui enclenche le gameOver
+    private static GameOverTrigger trigger;//trigger qui enclenche le gameOver
 
-    public float initialDelay = 10f; //Delai de base. Delai avant la première apparition d'un animal
+    public float initialDelay = 2f; //Delai de base. Delai avant la première apparition d'un animal
 
     public float nextDelay; //Délai avant la prochaine apparition
 
@@ -28,7 +28,7 @@ public class AnimalsSpawnScript : MonoBehaviour
         if (!trigger.gameOver)
         {
             GameObject a = animalsPrefab[Random.Range(0, animalsPrefab.Length)];//2 types d'animaux peuvent apparaitrent
-            Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 0, 5);//Ils apparaissent horizontalement à une position aléatoire
+            Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 0, 10);//Ils apparaissent horizontalement à une position aléatoire
 
             //Rotation Aléatoire À voir
             Instantiate(a, spawnPos, a.transform.rotation);

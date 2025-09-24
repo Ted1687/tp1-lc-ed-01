@@ -926,7 +926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45cbefca2063e9c428a83f7fc67d61ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 8
   foodPrefab: {fileID: 6747850002373534560, guid: 20251445113575249bd380a3f68fc163, type: 3}
   fx_foodThrow: {fileID: 640652900}
 --- !u!65 &1098835728

@@ -11,7 +11,7 @@ public class MoveDown : MonoBehaviour
 
     private float repeatWidth = 50f;//Distance de déplacement avant la répétition du backGround
 
-    GameOverTrigger trigger;// trigger qui enclenche le gameOver
+    private static GameOverTrigger trigger;// trigger qui enclenche le gameOver
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

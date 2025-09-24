@@ -6,7 +6,7 @@ public class AnimalController : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip audioClip;
     
-    public float speed = 10f;
+    public float speed = 3f;
 
     public float speedFuite = 8f;
 
@@ -14,13 +14,11 @@ public class AnimalController : MonoBehaviour
     private float limiteGauche = 9f;
     private float limiteDroite = -9f;
 
-    private bool movingLeft = true; //L'animal va � gauche
+    private bool movingLeft = true; //L'animal va à gauche
 
     private Animator animalAnim; //Composant animator
 
-    private Rigidbody animalRB; // Composant rigidBody
-
-    private GameOverTrigger trigger; //Trigger qui enclenche le game over
+    private static GameOverTrigger trigger; //Trigger qui enclenche le game over
 
     private GameObject player; //Le player
 
@@ -36,15 +34,13 @@ public class AnimalController : MonoBehaviour
     {
         animalAnim = GetComponent<Animator>();
 
-        animalRB = GetComponent<Rigidbody>();
-
         trigger = GameObject.Find("Player").GetComponent<GameOverTrigger>();
 
         player = GameObject.Find("Player");
         
         audioSource = GetComponent<AudioSource>();
 
-
+        Physics.gravity = new Vector3(0, -9.81f * 10f, 0);
     }
 
     public void Manger()
@@ -63,8 +59,8 @@ public class AnimalController : MonoBehaviour
         if (transform.position.z > player.transform.position.z + 2 && hungry)
         {
             trigger.gameOver = true;
-            trigger.jouerSoundGameOver();//Son de game over
-            
+            trigger.jouerSoundGameOver();
+
         }
 
         //L'animmal est affam� et en jeu
@@ -126,14 +122,10 @@ public class AnimalController : MonoBehaviour
         }//C'est le game over
         else if(trigger.gameOver)
         {
-
-            //Animation de game Over
-            //Physics.gravity = new Vector3(0, -9.81f * 10f, 0);
-            //bool auSol = true;
-            //if (auSol)
-            //{
-            //    animalRB.AddForce(Vector3.up * 1f, ForceMode.Impulse);
-            //}
+            
+            // Rotation infinie
+            transform.Rotate(Vector3.up * 60f * Time.deltaTime, Space.World);
+         
 
         }
 
