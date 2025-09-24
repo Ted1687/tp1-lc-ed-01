@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class AnimalController : MonoBehaviour
 {
-    
 
+    public AudioSource audioSource;
+    public AudioClip audioClip;
+    
     public float speed = 10f;
 
     public float speedFuite = 8f;
 
-    //Limite de déplacement
+    //Limite de dï¿½placement
     private float limiteGauche = 9f;
     private float limiteDroite = -9f;
 
-    private bool movingLeft = true; //L'animal va à gauche
+    private bool movingLeft = true; //L'animal va ï¿½ gauche
 
     private Animator animalAnim; //Composant animator
 
@@ -22,11 +24,11 @@ public class AnimalController : MonoBehaviour
 
     private GameObject player; //Le player
 
-    private bool hungry = true; //Détermine si l'animal est nourrit
+    private bool hungry = true; //Dï¿½termine si l'animal est nourrit
 
-    private float animationEatDuration = 2f; //Durée de l'animation Eat
+    private float animationEatDuration = 2f; //Durï¿½e de l'animation Eat
 
-    private float progress = 0f; //Progrès du temps
+    private float progress = 0f; //Progrï¿½s du temps
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -39,6 +41,8 @@ public class AnimalController : MonoBehaviour
         trigger = GameObject.Find("Player").GetComponent<GameOverTrigger>();
 
         player = GameObject.Find("Player");
+        
+        audioSource = GetComponent<AudioSource>();
 
 
     }
@@ -46,13 +50,16 @@ public class AnimalController : MonoBehaviour
     public void Manger()
     {
         hungry = false;//L'aniaml est nourrit. Il n'a plus faim.
+        
+        if(!audioSource.isPlaying)
+            audioSource.PlayOneShot(audioClip);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        //Game over si l'animal affamé dépasse le joueur
+        //Game over si l'animal affamï¿½ dï¿½passe le joueur
         if (transform.position.z > player.transform.position.z + 2 && hungry)
         {
             trigger.gameOver = true;
@@ -60,23 +67,23 @@ public class AnimalController : MonoBehaviour
             
         }
 
-        //L'animmal est affamé et en jeu
+        //L'animmal est affamï¿½ et en jeu
         if (hungry && !trigger.gameOver)
         {
 
             if (movingLeft)
             {
-                //L'animal va à gauche
+                //L'animal va ï¿½ gauche
                 transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
                 
             }
             else
             {
-                //L'animal va à droite
+                //L'animal va ï¿½ droite
                 transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
             }
 
-            //Il fait demi tour au différente limite
+            //Il fait demi tour au diffï¿½rente limite
             if (transform.position.x >= limiteGauche && movingLeft)
             {
                 movingLeft = false;
@@ -96,16 +103,16 @@ public class AnimalController : MonoBehaviour
 
             if (progress < animationEatDuration)
             {
-                animalAnim.SetBool("Eat_b", true);//L'animation eat est déclenché
+                animalAnim.SetBool("Eat_b", true);//L'animation eat est dï¿½clenchï¿½
 
             }
             else if (progress > animationEatDuration)
             {
-                //Après un certain temps l'animation passe de eat à running
+                //Aprï¿½s un certain temps l'animation passe de eat ï¿½ running
                 animalAnim.SetBool("Eat_b", false);
                 animalAnim.SetFloat("Speed_f", 1.5f);
 
-                //L'animal sort du côté gauche ou droite en fonction de sa direction de rotation
+                //L'animal sort du cï¿½tï¿½ gauche ou droite en fonction de sa direction de rotation
                 if (transform.rotation.y > 0)
                 {
                     transform.Translate(Vector3.right * speedFuite * Time.deltaTime, Space.World);
